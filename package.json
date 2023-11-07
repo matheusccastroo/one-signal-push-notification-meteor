@@ -1,0 +1,8 @@
+{
+  "name": "meteor-one-signal-push-notification",
+  "version": "1.0.0",
+  "description": "Meteor One Signal integration",
+  "devDependencies": {
+    "prettier": "^3.0.3"
+  }
+}

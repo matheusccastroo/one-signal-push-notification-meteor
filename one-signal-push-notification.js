@@ -1,5 +1,7 @@
 import { Meteor } from 'meteor/meteor';
+import { Random } from 'meteor/random';
 import { callMethod, log, logError, logWarn, throwPushError } from './helpers';
+import { OneSignalPushNotificationMeteorMetricsCollection } from './collection';
 
 class OneSignalSender {
   restKey;
@@ -153,8 +155,14 @@ class OneSignalSender {
 
     // Handling data from notification (routes etc)
     window.plugins.OneSignal.setNotificationOpenedHandler(
-      ({ notification: { additionalData: { url } = {} } = {} }) => {
+      async ({
+        notification: { additionalData: { url } = {}, notificationId } = {},
+      }) => {
         this._log(`RECEIVED NEW NOTIFICATION WITH URL ${url}`);
+
+        await OneSignalPushNotificationMeteorMetricsCollection._setNotificationAsReadByUser(
+          { notificationId, userId: Meteor.userId(), shouldLog: this.shouldLog }
+        );
 
         if (!url) {
           return;
@@ -190,7 +198,7 @@ class OneSignalSender {
       const playerId = stateChanges.userId;
 
       if (!playerId) {
-        Meteor.setTimeout(() => this._setPlayerId(), 0);
+        Meteor.defer(() => this._setPlayerId());
         return;
       }
 
@@ -209,7 +217,14 @@ class OneSignalSender {
     import './methods';
   }
 
-  async sendPushNotification({ title, message, userIds, additionalData, url }) {
+  async sendPushNotification({
+    title,
+    message,
+    userIds,
+    additionalData,
+    url,
+    notificationId: notificationIdParam,
+  }) {
     if (!Meteor.isServer) {
       throwPushError(
         'arch-error',
@@ -220,6 +235,7 @@ class OneSignalSender {
     check(title, String);
     check(message, String);
     check(userIds, [String]);
+    check(notificationIdParam, Match.Maybe(String));
 
     if (!userIds.length) {
       throwPushError('missing-information', `Target audience is empty`);
@@ -230,12 +246,13 @@ class OneSignalSender {
       .fetch()
       .reduce((acc = [], { playerIds = [] }) => [...acc, ...playerIds], []);
 
+    const notificationId = notificationIdParam || Random.id();
     const bodyObject = {
       app_id: this.appId,
       headings: { en: title },
       contents: { en: message },
       include_player_ids: playerIds,
-      data: { ...(url ? { url } : {}), ...additionalData },
+      data: { ...(url ? { url } : {}), ...additionalData, notificationId },
     };
 
     const bodyAsString = JSON.stringify(bodyObject);
@@ -260,6 +277,15 @@ class OneSignalSender {
         2
       )}`
     );
+
+    await OneSignalPushNotificationMeteorMetricsCollection._addMetricsForNotification(
+      {
+        notificationId,
+        userIds,
+      }
+    );
+
+    return notificationId;
   }
 }
 

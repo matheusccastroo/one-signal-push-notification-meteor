@@ -26,4 +26,31 @@ Meteor.methods({
       { multi: true }
     );
   },
+  'oneSignal#setNotificationAsRead'({ notificationId, userId }) {
+    check(notificationId, String);
+    check(userId, String);
+
+    if (this.isSimulation) {
+      return;
+    }
+
+    const contextUserId = this.userId;
+    if (userId !== contextUserId) {
+      import { throwPushError } from './helpers';
+
+      throwPushError(
+        'user-mismatch',
+        'User parameter is not the same as the context user'
+      );
+    }
+
+    import { OneSignalPushNotificationMeteorMetricsCollection } from './collection';
+
+    return OneSignalPushNotificationMeteorMetricsCollection.update({
+      notificationId,
+      userId,
+      updatedAt: new Date(),
+      read: true,
+    });
+  },
 });

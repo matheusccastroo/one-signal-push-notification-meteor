@@ -8,7 +8,6 @@ Package.describe({
 
 Npm.depends({
   'js-cookie': '3.0.5',
-  'simpl-schema': '3.4.1',
 });
 
 Cordova.depends({
@@ -18,8 +17,9 @@ Cordova.depends({
 
 Package.onUse(function (api) {
   api.versionsFrom('2.13.3');
+  api.use('modules');
   api.use('ecmascript');
-  api.use('aldeed:collection2');
 
-  api.mainModule('one-signal-push-notification.js');
+  api.mainModule('lib/server/index.js', 'server');
+  api.mainModule('lib/client/index.js', 'client', { lazy: true });
 });

@@ -20,7 +20,7 @@ To send push notifications, simply call (on the server):
 ```
 import { OneSignalPushNotification } from 'meteor/matheusccastro:one-signal-push-notification';
 
-await OneSignalPushNotification.sendPushNotification({ title, message, userIds, additionalData, url });
+await OneSignalPushNotification.sendPushNotification({ title, message, userIds, additionalData, url, notificationId });
 ```
 To make the notification redirect to some part of your app or to an external page, pass the `url` property to the `additionalData` object or as a named parameter to the function.
 
@@ -44,6 +44,24 @@ import { OneSignalPushNotification } from 'meteor/matheusccastro:one-signal-push
 OneSignalPushNotification.enableLog();
 OneSignalPushNotification.disableLog();
 ```
+
+### Metrics
+By default, we store the notification that was sent and the audience of it.
+The metrics are stored under the `OneSignalPushNotificationMeteorMetrics` collection. The metric recording is done automatically and if you want, you can
+pass a `notificationId` to your `sendPushNotification` call, this way you can match a notification to an event that happened on your application.
+
+The schema for the collection is the following:
+```json
+{
+  userId: String,
+  notificationId: String,
+  readAt: Date,
+  createdAt: Date,
+  updatedAt: Date,
+  read: Boolean,
+}
+```
+
 
 ### Important
 This package stores the `playerIds` from `one-signal` in the user document. You may need to adapt your publications to account

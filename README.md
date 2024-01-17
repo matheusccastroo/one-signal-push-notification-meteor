@@ -66,5 +66,3 @@ The schema for the collection is the following:
 ### Important
 This package stores the `playerIds` from `one-signal` in the user document. You may need to adapt your publications to account
 for this new field.
-
-Also, this package does not store the notifications sent, it simply sends it. If you want to show a history, you can consult the `one-signal` dashboard.

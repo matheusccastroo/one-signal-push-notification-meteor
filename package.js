@@ -16,7 +16,7 @@ Cordova.depends({
 });
 
 Package.onUse(function (api) {
-  api.versionsFrom('2.13.3');
+  api.versionsFrom('2.8');
   api.use(['modules', 'ecmascript', 'mongo']);
   api.use(['fetch', 'random'], 'server');
   api.use('accounts-base', 'client');

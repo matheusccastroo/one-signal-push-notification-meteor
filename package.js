@@ -16,11 +16,11 @@ Cordova.depends({
 });
 
 Package.onUse(function (api) {
-  api.versionsFrom('2.8');
-  api.use(['modules', 'ecmascript', 'mongo']);
+  api.versionsFrom('2.8.0');
+  api.use(['modules', 'ecmascript', 'mongo', 'check']);
   api.use(['fetch', 'random'], 'server');
   api.use('accounts-base', 'client');
 
-  api.mainModule('lib/server/index.js', 'server');
+  api.mainModule('lib/server/index.js', 'server', { lazy: true });
   api.mainModule('lib/client/index.js', 'client', { lazy: true });
 });

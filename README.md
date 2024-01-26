@@ -36,6 +36,8 @@ This will register your callback on the `one-signal` plugin, and it will be call
 tries to redirect the user to the page you sent (i.e. `additionalData.url` exists).
 Normally in this handler you would make your router redirect the user to the page.
 
+**Note: that both the `server` and `client` files are `lazy` imported, so you need to do an import on the architecture you want to use.**
+
 ### Logging
 By default, logging will be enabled when `Meteor.isDevelopment` is true. If you want to change that, call (outside of startup calls):
 ```

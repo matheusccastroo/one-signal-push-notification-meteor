@@ -1,6 +1,6 @@
 Package.describe({
   name: 'matheusccastro:one-signal-push-notification',
-  version: '2.1.0',
+  version: '2.1.1',
   summary: 'Easily send push notifications using one-signal and Meteor',
   git: 'https://github.com/matheusccastroo/one-signal-push-notification-meteor',
   documentation: 'README.md',
@@ -18,8 +18,8 @@ Cordova.depends({
 Package.onUse(function (api) {
   api.versionsFrom('2.8.0');
   api.use(['modules', 'ecmascript', 'mongo', 'check']);
-  api.use(['fetch', 'random'], 'server');
-  api.use('accounts-base', 'client');
+  api.use(['fetch', 'random', 'ddp-server', 'webapp'], 'server');
+  api.use(['accounts-base', 'ddp-client'], 'client');
 
   api.mainModule('lib/server/index.js', 'server', { lazy: true });
   api.mainModule('lib/client/index.js', 'client', { lazy: true });

@@ -1,6 +1,6 @@
 Package.describe({
   name: 'matheusccastro:one-signal-push-notification',
-  version: '2.1.1',
+  version: '2.2.0',
   summary: 'Easily send push notifications using one-signal and Meteor',
   git: 'https://github.com/matheusccastroo/one-signal-push-notification-meteor',
   documentation: 'README.md',
@@ -11,7 +11,7 @@ Npm.depends({
 });
 
 Cordova.depends({
-  'onesignal-cordova-plugin': '3.1.0',
+  'onesignal-cordova-plugin': '3.3.2',
   'cordova-plugin-inappbrowser': '5.0.0',
 });
 

@@ -37,6 +37,15 @@ This will register your callback on the `one-signal` plugin, and it will be call
 tries to redirect the user to the page you sent (i.e. `additionalData.url` exists).
 Normally in this handler you would make your router redirect the user to the page.
 
+To prompt the user for push notification permission manually (on the client):
+```
+import { OneSignalPushNotification } from 'meteor/matheusccastro:one-signal-push-notification';
+
+const accepted = await OneSignalPushNotification.promptPermission();
+// accepted is a boolean indicating whether the user granted permission
+```
+Note: This is only useful when `ONESIGNAL_DISABLE_AUTO_PROMPT` is set to `true`.
+
 **Note: that both the `server` and `client` files are `lazy` imported, so you need to do an import on the architecture you want to use.**
 
 ### Logging

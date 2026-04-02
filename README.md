@@ -13,6 +13,7 @@ meteor add matheusccastro:one-signal-push-notification
 * Add the following variables in your `Meteor.settings` file: 
   * `ONESIGNAL_APP_ID` in `Meteor.settings.public`
   * `ONESIGNAL_REST_KEY` in `Meteor.settings` (i.e. top level settings on server)
+  * `ONESIGNAL_AUTO_PROMPT` in `Meteor.settings.public` (optional, defaults to `true`)
 
 ### Usage
 

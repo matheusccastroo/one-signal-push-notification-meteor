@@ -1,6 +1,6 @@
 Package.describe({
   name: 'matheusccastro:one-signal-push-notification',
-  version: '2.3.0',
+  version: '2.3.1',
   summary: 'Easily send push notifications using one-signal and Meteor',
   git: 'https://github.com/matheusccastroo/one-signal-push-notification-meteor',
   documentation: 'README.md',

@@ -26,6 +26,17 @@ await OneSignalPushNotification.sendPushNotification({ title, message, userIds, 
 ```
 To make the notification redirect to some part of your app or to an external page, pass the `url` property to the `additionalData` object or as a named parameter to the function.
 
+To send a push using a different OneSignal app (for example when you have multiple mobile apps with separate bundle IDs), pass `appId` and `restKey` together. When omitted, the defaults from `ONESIGNAL_APP_ID` and `ONESIGNAL_REST_KEY` are used:
+```
+await OneSignalPushNotification.sendPushNotification({
+  title,
+  message,
+  userIds,
+  appId: Meteor.settings.ONESIGNAL_TEAM_APP_ID,
+  restKey: Meteor.settings.ONESIGNAL_TEAM_REST_KEY,
+});
+```
+
 #
 
 To enable redirects from push notifications inside your app, do the following (on the client - outside of startup calls):

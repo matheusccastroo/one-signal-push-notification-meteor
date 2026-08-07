@@ -14,6 +14,7 @@ meteor add matheusccastro:one-signal-push-notification
   * `ONESIGNAL_APP_ID` in `Meteor.settings.public`
   * `ONESIGNAL_REST_KEY` in `Meteor.settings` (i.e. top level settings on server)
   * `ONESIGNAL_DISABLE_AUTO_PROMPT` in `Meteor.settings.public` (optional, defaults to `false` - auto prompt is enabled by default)
+  * `ONESIGNAL_REMOVE_INVALID_PLAYER_IDS` in `Meteor.settings` (optional, defaults to `false`). When enabled, removes IDs returned in OneSignal's `invalid_player_ids` response from every user's `playerIds` array after a notification is sent. Keep it disabled to retain IDs that may become valid again, such as when a user temporarily opts out of notifications.
 
 ### Usage
 
